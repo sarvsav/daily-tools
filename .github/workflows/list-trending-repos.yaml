@@ -1,7 +1,9 @@
 name: List trending Go repositories
-## Add triggers on pushing to main or manually running the workflow
+## Add manual trigger and cron job to run every day at 6 AM UTC
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'
 
 jobs:
   go_list_trending_repos:
@@ -10,8 +12,6 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
-        with:
-            ref: gh-pages
       - name: Generate report
         id: complete
         uses: sarvsav/go-list-trending-repos@main
@@ -35,4 +35,4 @@ jobs:
         run: |
           git add output/data.json
           git commit -m "chore: update the list of trending Go repositories"
-          git push origin gh-pages
+          git push origin main
