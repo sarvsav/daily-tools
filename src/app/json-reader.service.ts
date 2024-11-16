@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class JsonReaderService {
-  private jsonFilePath = '/data.json'; // Adjust the filename as needed
+  private jsonFilePath = '/daily-tools/data.json'; // Adjust the filename as needed
   constructor(private http: HttpClient) { }
   getJsonData(): Observable<any> {
     return this.http.get<any>(this.jsonFilePath);
