@@ -20,6 +20,8 @@ jobs:
       - name: Save results
         id: json_results
         run: |
+          ls -lR
+          pwd
           echo "${{ steps.complete.outputs.json_data }}" > output/data.json
       - name: Verify the generated file
         run: |
