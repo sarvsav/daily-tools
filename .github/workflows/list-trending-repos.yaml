@@ -1,0 +1,33 @@
+name: List trending Go repositories
+## Add triggers on pushing to main or manually running the workflow
+on:
+  workflow_dispatch:
+
+jobs:
+  go_list_trending_repos:
+    runs-on: ubuntu-latest
+    name: A job to list the trending golang repositories on GitHub
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: Generate report
+        id: complete
+        uses: sarvsav/go-list-trending-repos@main
+        with:
+            since: all
+      - name: Save results
+        id: json_results
+        run: |
+          echo "${{ steps.complete.outputs.json_data }}" > output/data.json
+      - name: Verify the generated file
+        run: |
+          cat output/data.json
+      - name: Configure Git for commiting the changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Commit and push the changes
+        run: |
+          git add output/data.json
+          git commit -m "chore: update the list of trending Go repositories"
+          git push

@@ -1,0 +1,32 @@
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 16px;
+  }
+  
+  .card {
+    flex: 1 1 30%;
+    max-width: 30%;
+    box-sizing: border-box;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    position: relative;
+  }
+  
+  .clipboard-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #555;
+  }
+  
+  .clipboard-icon:hover {
+    color: #000;
+  }
+  
