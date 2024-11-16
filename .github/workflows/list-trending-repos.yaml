@@ -8,10 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to list the trending golang repositories on GitHub
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v4
-        with:
-            ref: gh-pages
       - name: Generate report
         id: complete
         uses: sarvsav/go-list-trending-repos@main
@@ -22,11 +18,15 @@ jobs:
     needs: go_list_trending_repos-generate
     name: Process the result
     steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+        with:
+            ref: gh-pages
       - name: Save results
         id: json_results
         run: |
           mkdir -p output
-          printf '%s' "${{ toJSON(steps.complete.outputs.json_data) }}" > output/data.json
+          printf '%s' "${{ toJSON(needs.go_list_trending_repos-generate.complete.outputs.json_data) }}" > output/data.json
       - name: Verify the generated file
         run: |
           cat output/data.json
