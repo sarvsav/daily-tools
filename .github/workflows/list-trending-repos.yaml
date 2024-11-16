@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to list the trending golang repositories on GitHub
     steps:
+      - name: Install jq
+        run: sudo apt-get install jq
       - name: Check out the repo
         uses: actions/checkout@v4
         with:
@@ -21,8 +23,7 @@ jobs:
         id: json_results
         run: |
           mkdir -p output
-          echo "${{ steps.complete.outputs.json_data }}"
-          printf '%s' "${{ steps.complete.outputs.json_data }}" > output/data.json
+          echo '${{ fromJson(steps.complete.outputs.json_data) }}' > output/data.json
       - name: Verify the generated file
         run: |
           cat output/data.json
