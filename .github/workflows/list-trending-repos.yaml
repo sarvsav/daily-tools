@@ -20,6 +20,7 @@ jobs:
       - name: Save results
         id: json_results
         run: |
+          sleep 10
           mkdir -p output
           printf '%s' "${{ toJSON(steps.complete.outputs.json_data) }}" > output/data.json
       - name: Verify the generated file
