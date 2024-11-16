@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  go_list_trending_repos:
+  go_list_trending_repos-generate:
     runs-on: ubuntu-latest
     name: A job to list the trending golang repositories on GitHub
     steps:
@@ -17,10 +17,14 @@ jobs:
         uses: sarvsav/go-list-trending-repos@main
         with:
             since: all
+  process:
+    runs-on: ubuntu-latest
+    needs: go_list_trending_repos-generate
+    name: Process the result
+    steps:
       - name: Save results
         id: json_results
         run: |
-          sleep 10
           mkdir -p output
           printf '%s' "${{ toJSON(steps.complete.outputs.json_data) }}" > output/data.json
       - name: Verify the generated file
