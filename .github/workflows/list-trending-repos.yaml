@@ -21,7 +21,8 @@ jobs:
         id: json_results
         run: |
           mkdir -p output
-          echo "${{ fromJson(steps.complete.outputs.json_data) }}" > output/data.json
+          echo "${{ steps.complete.outputs.json_data }}"
+          printf '%s' "${{ steps.complete.outputs.json_data }}" > output/data.json
       - name: Verify the generated file
         run: |
           cat output/data.json
