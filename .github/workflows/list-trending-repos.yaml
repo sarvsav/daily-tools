@@ -12,7 +12,8 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
-        ref: gh-pages
+        with:
+          ref: gh-pages
       - name: Generate report
         id: complete
         uses: sarvsav/go-list-trending-repos@main
