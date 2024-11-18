@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
+        ref: gh-pages
       - name: Generate report
         id: complete
         uses: sarvsav/go-list-trending-repos@main
@@ -20,11 +21,10 @@ jobs:
       - name: Save results
         id: json_results
         run: |
-          mkdir -p output
-          echo '${{ steps.complete.outputs.json_data }}' > output/data.json
+          echo '${{ steps.complete.outputs.json_data }}' > data.json
       - name: Verify the generated file
         run: |
-          cat output/data.json
+          cat data.json
       - name: Configure Git for commiting the changes
         run: |
           git config --global user.name "github-actions[bot]"
@@ -35,4 +35,4 @@ jobs:
         run: |
           git add output/data.json
           git commit -m "chore: update the list of trending Go repositories"
-          git push origin main
+          git push origin gh-pages
